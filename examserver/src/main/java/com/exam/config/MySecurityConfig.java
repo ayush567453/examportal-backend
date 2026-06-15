@@ -64,8 +64,14 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/generate-token", "/user/","/allUser/","/api/forgot-password","/api/reset-password").permitAll()
+                .antMatchers(
+                    "/generate-token", "/user/", "/allUser/",
+                    "/api/forgot-password", "/api/reset-password",
+                    "/logos/**", "/public/**"
+                ).permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
+                .antMatchers("/super-admin/**").hasAnyAuthority("SUPER_ADMIN")
+                .antMatchers("/school/**").hasAnyAuthority("SCHOOL_ADMIN","SUPER_ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)

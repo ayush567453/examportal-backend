@@ -24,6 +24,7 @@ public class User implements UserDetails {
     private String phone;
     private boolean enabled = true;
     private String profile;
+    private String tenantId;   // null for SUPER_ADMIN
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
     @JsonIgnore
@@ -157,5 +158,13 @@ public class User implements UserDetails {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
     }
 }

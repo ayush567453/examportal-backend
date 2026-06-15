@@ -2,10 +2,9 @@ package com.exam.controller;
 
 import com.exam.model.exam.Category;
 import com.exam.model.exam.Quiz;
+import com.exam.repo.QuizRepository;
 import com.exam.service.QuizService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +17,9 @@ import java.util.Map;
 public class QuizController {
     @Autowired
     private QuizService quizService;
+
+    @Autowired
+    private QuizRepository quizRepository;
 
     //add quiz service
     @PostMapping("/")
@@ -71,7 +73,10 @@ public class QuizController {
         return this.quizService.getActiveQuizzesOfCategory(category);
     }
 
-
-
+    // Get active quizzes for a specific tenant (school)
+    @GetMapping("/active/tenant/{tenantId}")
+    public List<Quiz> getActiveQuizzesByTenant(@PathVariable String tenantId) {
+        return quizRepository.findByCategory_TenantIdAndActive(tenantId, true);
+    }
 
 }

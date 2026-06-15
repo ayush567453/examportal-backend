@@ -17,6 +17,9 @@ public class Category {
 
     private String description;
 
+    // null = global (visible to ADMIN), set = school-specific
+    private String tenantId;
+
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Quiz> quizzes = new LinkedHashSet<>();
@@ -51,5 +54,13 @@ public class Category {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
     }
 }

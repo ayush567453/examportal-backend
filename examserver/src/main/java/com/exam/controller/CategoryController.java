@@ -1,10 +1,13 @@
 package com.exam.controller;
 
 import com.exam.model.exam.Category;
+import com.exam.repo.CategoryRepository;
 import com.exam.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/category")
@@ -13,6 +16,9 @@ public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     //add category
     @PostMapping("/")
@@ -43,6 +49,12 @@ public class CategoryController {
     @DeleteMapping("/{categoryId}")
     public void deleteCategory(@PathVariable("categoryId") Long categoryId) {
         this.categoryService.deleteCategory(categoryId);
+    }
+
+    // Get categories for a specific tenant (school)
+    @GetMapping("/tenant/{tenantId}")
+    public List<Category> getCategoriesByTenant(@PathVariable String tenantId) {
+        return categoryRepository.findByTenantId(tenantId);
     }
 
 }

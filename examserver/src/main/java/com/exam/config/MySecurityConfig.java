@@ -51,10 +51,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(List.of(
-                "https://exam-portal-frontend-eight.vercel.app"
-                // Add more origins if needed, e.g. "http://localhost:4200"
-        ));
+        configuration.setAllowedOriginPatterns(List.of("*"));
 
         configuration.setAllowedMethods(Arrays.asList(
                 "GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"
@@ -89,7 +86,8 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(
                         "/generate-token", "/user/", "/allUser/",
                         "/api/forgot-password", "/api/reset-password",
-                        "/logos/**", "/public/**"
+                        "/logos/**", "/public/**",
+                        "/api/library/**"
                 ).permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .antMatchers("/super-admin/**").hasAnyAuthority("SUPER_ADMIN")

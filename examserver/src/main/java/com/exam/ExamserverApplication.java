@@ -82,8 +82,8 @@ public class ExamserverApplication implements CommandLineRunner {
             System.out.println("User 1 created: " + createdUser1.getUsername());
             System.out.println("User 2 created: " + createdUser2.getUsername());
 
-        } catch (UserFoundException e) {
-            e.printStackTrace();
-        }
+       } catch (Exception e) {
+    System.out.println("Initialization skipped: " + e.getMessage());
+}
     }
 }
